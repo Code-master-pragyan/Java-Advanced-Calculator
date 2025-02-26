@@ -108,3 +108,44 @@ for (String text : buttons) {                                        // Iterate 
         add(panel, BorderLayout.CENTER);           // Adds the button panel to center of calculator window
         setVisible(true);                          // Makes the calculator window visible on screen
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String command = e.getActionCommand();                    // Get the text from the button that was clicked
+
+        if (command.equals("AC")) {                              // All Clear button pressed
+            input.setLength(0);                                  // Clear the input buffer
+            display.setText("");                                 // Clear the display
+        } else if (command.equals("DEL")) {                     // Delete button pressed
+            if (!input.isEmpty()) {                             // If there's input to delete
+                input.delete(input.length() - 1, input.length());// Remove last character
+                display.setText(input.toString());               // Update display
+            }
+        } else if (command.equals("=")) {                       // Equals button pressed
+            try {
+                double result = evaluateExpression(input.toString());    // Calculate result
+                history.add(input.toString() + " = " + result);          // Add to history
+                display.setText(String.format("%.6f", result));          // Show result with 6 decimals
+                input.setLength(0);                                      // Clear input buffer
+            } catch (Exception ex) {
+                display.setText("Error");                                // Show error on invalid expression
+                input.setLength(0);                                      // Clear input buffer
+            }
+        } else if (command.equals("M+")) {                      // Memory store button pressed
+            try {
+                memory = Double.parseDouble(display.getText());  // Store current display value in memory
+            } catch (NumberFormatException ex) {
+                display.setText("Error");                        // Show error if value invalid
+            }
+        } else if (command.equals("MR")) {                      // Memory recall button pressed
+            display.setText(String.valueOf(memory));            // Show stored memory value
+        } else if (command.equals("H")) {                       // History button pressed
+            JOptionPane.showMessageDialog(this,          // Show history dialog
+                    String.join("\n", history),                 // Join history entries with newlines
+                    "Calculation History",                      // Dialog title
+                    JOptionPane.INFORMATION_MESSAGE);           // Dialog type
+        } else {
+            input.append(command);                              // Add button text to input
+            display.setText(input.toString());                  // Update display with new input
+        }
+    }
