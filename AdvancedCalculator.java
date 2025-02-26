@@ -186,3 +186,32 @@ for (String text : buttons) {                                        // Iterate 
 
         return output.toString();
     }
+
+        private double evaluatePostfix(String postfix) throws Exception {
+        Stack<Double> stack = new Stack<>();                          // Stack for operands
+        for (String token : postfix.split(" ")) {                    // Process each token
+            if (token.isEmpty()) continue;                           // Skip empty tokens
+            try {
+                stack.push(Double.parseDouble(token));               // Try to parse as number
+            } catch (NumberFormatException e) {                      // If token is operator/function
+                double a = stack.pop();                              // Pop operand
+                switch (token) {
+                    case "sin": stack.push(Math.sin(Math.toRadians(a))); break;  // Sine function
+                    case "cos": stack.push(Math.cos(Math.toRadians(a))); break;  // Cosine function
+                    case "tan": stack.push(Math.tan(Math.toRadians(a))); break;  // Tangent function
+                    case "log": stack.push(Math.log10(a)); break;                // Log base 10
+                    case "sqrt": stack.push(Math.sqrt(a)); break;               // Square root
+                    case "cot": stack.push(1 / Math.tan(Math.toRadians(a))); break;  // Cotangent
+                    case "sec": stack.push(1 / Math.cos(Math.toRadians(a))); break;  // Secant
+                    case "csc": stack.push(1 / Math.sin(Math.toRadians(a))); break;  // Cosecant
+                    case "+": stack.push(stack.pop() + a); break;               // Addition
+                    case "-": stack.push(stack.pop() - a); break;               // Subtraction
+                    case "x": stack.push(stack.pop() * a); break;               // Multiplication
+                    case "/": stack.push(stack.pop() / a); break;               // Division
+                    case "^": stack.push(Math.pow(stack.pop(), a)); break;      // Exponentiation
+                    default: throw new Exception("Invalid Operator");           // Unknown operator
+                }
+            }
+        }
+        return stack.pop();                                          // Return final result
+    }
