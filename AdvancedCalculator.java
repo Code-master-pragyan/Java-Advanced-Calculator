@@ -215,3 +215,48 @@ for (String text : buttons) {                                        // Iterate 
         }
         return stack.pop();                                          // Return final result
     }
+
+        private int precedence(char operator) {
+            return switch (operator) {
+                case '+', '-' -> 1;      // Lowest precedence for addition and subtraction
+                case 'x', '/' -> 2;      // Medium precedence for multiplication and division
+                case '^' -> 3;           // Highest precedence for exponentiation
+                default -> 0;            // Default precedence for other characters
+            };
+        }
+
+
+        class RoundedButton extends JButton {
+            public RoundedButton(String text) {
+                super(text);                        // Call parent constructor with button text
+                setContentAreaFilled(false);        // Disable default button fill
+                setFocusPainted(false);            // Remove focus border/highlight
+                setBorderPainted(false);            // Remove button border
+            }
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();    // Create graphics context for custom painting
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,    // Enable antialiasing
+                        RenderingHints.VALUE_ANTIALIAS_ON);             // for smoother edges
+
+                g2.setColor(getBackground());               // Set default background color
+
+                if (getModel().isPressed()) {              // If button is being pressed
+                    g2.setColor(getBackground().darker());  // Darken the background
+                } else if (getModel().isRollover()) {      // If mouse is over button
+                    g2.setColor(new Color(100, 100, 100)); // Use hover color
+                }
+
+                // Draw rounded rectangle for button shape (40px corner radius)
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 40, 40);
+                g2.dispose();                              // Clean up graphics context
+
+                super.paintComponent(g);                   // Paint button text/icon
+            }
+        }
+        
+    public static void main(String[] args) {
+        new AdvancedCalculator();    // Create and display calculator window
+    }
+}
