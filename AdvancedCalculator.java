@@ -80,3 +80,31 @@ import java.util.*;
                 "1", "2", "3", "-",
                 "0", ".", "+", "="
         };
+
+for (String text : buttons) {                                        // Iterate through button labels
+            JButton button = new RoundedButton(text);                        // Create custom rounded button
+            button.setFont(new Font("JetBrains Mono", Font.BOLD, 30));     // Set button font style and size
+            button.addActionListener(this);                                // Add click event handler
+
+            if (Arrays.asList(buttons).indexOf(text) < 8) {
+                button.setForeground(new Color(0, 162, 255)); // Light blue for first two rows
+            } else if (text.equals("DEL") || text.equals("AC")) {
+                button.setForeground(new Color(255, 69, 58)); // Red for DEL and AC
+            } else if (text.equals("M+") || text.equals("MR") || text.equals("H")) {
+                button.setForeground(new Color(243, 209, 24)); // Red for DEL and AC
+            } else {
+                button.setForeground(new Color(240, 240, 240)); // White for all other buttons
+            }
+            if (text.equals("=")) {
+                button.setBackground(new Color(37, 175, 236));       // Sets light blue background for equals button
+            } else {
+                button.setBackground(new Color(77, 77, 77));         // Sets dark gray background for other buttons
+            }
+            button.setFocusPainted(false);                             // Removes focus border/highlight
+            button.putClientProperty("JButton.buttonType", "roundRect"); // Sets button shape to rounded rectangle
+            panel.add(button);                                         // Adds the configured button to panel
+        }
+
+        add(panel, BorderLayout.CENTER);           // Adds the button panel to center of calculator window
+        setVisible(true);                          // Makes the calculator window visible on screen
+    }
