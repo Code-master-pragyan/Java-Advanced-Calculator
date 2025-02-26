@@ -149,3 +149,40 @@ for (String text : buttons) {                                        // Iterate 
             display.setText(input.toString());                  // Update display with new input
         }
     }
+
+    private double evaluateExpression(String expression) throws Exception {
+            return evaluatePostfix(infixToPostfix(expression));    // Convert infix to postfix and evaluate
+        }
+
+    private String infixToPostfix(String expression) {
+        StringBuilder output = new StringBuilder();                    // Store postfix expression
+        Stack<String> operators = new Stack<>();                       // Stack for operators
+        // Split expression keeping operators and parentheses separate
+        String[] tokens = expression.split("(?<=[-+x/^()])|(?=[-+x/^()])");
+
+        for (String token : tokens) {
+            token = token.trim();                                      // Remove whitespace
+            if (token.matches("\\d+(\\.\\d+)?")) {                    // If token is a number
+                output.append(token).append(" ");                      // Add to output
+            } else if (UNARY_FUNCTIONS.contains(token) || token.equals("(")) {  // If function or open parenthesis
+                operators.push(token);                                 // Push to operator stack
+            } else if (token.equals(")")) {                           // If closing parenthesis
+                while (!operators.isEmpty() && !operators.peek().equals("(")) {  // Until matching open parenthesis
+                    output.append(operators.pop()).append(" ");        // Pop operators to output
+                }
+                operators.pop();                                       // Remove open parenthesis
+            } else {                                                  // If operator
+                // Pop operators with higher/equal precedence
+                while (!operators.isEmpty() && precedence(token.charAt(0)) <= precedence(operators.peek().charAt(0))) {
+                    output.append(operators.pop()).append(" ");
+                }
+                operators.push(token);                                 // Push current operator
+            }
+        }
+
+        while (!operators.isEmpty()) {                                // Pop remaining operators
+            output.append(operators.pop()).append(" ");
+        }
+
+        return output.toString();
+    }
