@@ -26,7 +26,7 @@ Before running the **Advanced Calculator**, ensure you have the following instal
 ## 🚀 Installation & Usage
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/yourusername/AdvancedCalculator.git
+   git clone https://github.com/Code-master-pragyan/Java-Advanced-Calculator.git
    ```
 2. **Navigate to the project directory:**
    ```sh
@@ -44,14 +44,17 @@ Before running the **Advanced Calculator**, ensure you have the following instal
 ## 📂 Project Structure
 ```
 AdvancedCalculator/
-
-├── AdvancedCalculator.java  # Main calculator logic and UI
-│── README.md                     # Documentation
-│── LICENSE                       # License information
+│── docs/
+│   │── .gitkeep
+│   │── ADVANCED SCIENTIFIC CALCULATOR.pptx
+|   |── adv_calculator.mp4
+│── AdvancedCalculator.java
+│── README.md
 ```
 
 ## 🎨 UI Preview
 🖼️ The calculator has a grid layout with buttons for all supported functions. The design ensures easy readability and accessibility.
+<br>
 ![calcu](https://github.com/user-attachments/assets/33afadea-9849-4bd9-b891-529f6e16d722)
 
 
@@ -67,9 +70,6 @@ AdvancedCalculator/
 
 ## 🤝 Contributions
 🙌 Contributions are welcome! Feel free to open issues or submit pull requests.
-
-## 📜 License
-📝 This project is licensed under the **MIT License**.
 
 ## 📩 Contact
 For any questions or suggestions, contact: `sonydeb158@gmail.com` 📧
